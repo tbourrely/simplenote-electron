@@ -1,6 +1,7 @@
 import { v4 as uuid } from 'uuid';
 
 import exportZipArchive from '../../utils/export';
+import { tagHashOf as t, withTag } from '../../utils/tag-hash';
 
 import type * as A from '../action-types';
 import type * as S from '../';
@@ -28,10 +29,18 @@ export const middleware: S.Middleware = (store) => (
         systemTags.splice(markdownInNote, 1);
       }
 
+      // apply selected tag by default
+      const selectedTag = state.ui.openedTag;
+      let tags = action.note?.tags ?? [];
+      if (selectedTag) {
+        tags = withTag(tags, selectedTag);
+        // tags.push(t(selectedTag));
+      }
+
       return next({
         type: 'CREATE_NOTE_WITH_ID',
         noteId,
-        note: { ...action.note, systemTags },
+        note: { ...action.note, systemTags, tags },
         meta: {
           nextNoteToOpen: noteId,
         },
