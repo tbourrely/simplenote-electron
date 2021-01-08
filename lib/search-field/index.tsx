@@ -80,6 +80,7 @@ export class SearchField extends Component<Props> {
       <div className="search-field">
         <input
           aria-label={screenReaderLabel}
+          id="search-field"
           ref={this.inputField}
           type="search"
           placeholder={placeholder}
