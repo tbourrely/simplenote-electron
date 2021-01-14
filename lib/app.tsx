@@ -179,6 +179,7 @@ class AppComponent extends Component<Props> {
 
     return (
       <div className={appClasses}>
+        <EmailVerification />
         {isDevConfig && <DevBadge />}
         <div className={mainClasses}>
           {showNavigation && <NavigationBar />}
