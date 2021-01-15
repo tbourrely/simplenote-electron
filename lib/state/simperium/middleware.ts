@@ -24,6 +24,7 @@ import type * as T from '../../types';
 const debug = debugFactory('simperium-middleware');
 
 type Buckets = {
+  account: T.Account;
   note: T.Note;
   preferences: T.Preferences;
   tag: T.Tag;
@@ -149,6 +150,39 @@ export const initSimperium = (
       tagHash: (tagId as string) as T.TagHash,
     })
   );
+
+  const accountBucket = client.bucket('account');
+  accountBucket.channel.on('update', (entityId, updatedEntity) => {
+    if ('account-key' !== entityId) {
+      return;
+    }
+
+    switch (updatedEntity.status) {
+      case 'verified':
+        dispatch({
+          type: 'SET_EMAIL_VERIFIED',
+          verified: true,
+        });
+      case 'sent':
+        dispatch({
+          type: 'SET_EMAIL_VERIFIED',
+          verified: false,
+        });
+        dispatch({
+          type: 'SET_EMAIL_VERIFICATION_REQUESTED',
+          requested: true,
+        });
+      default:
+        dispatch({
+          type: 'SET_EMAIL_VERIFIED',
+          verified: false,
+        });
+        dispatch({
+          type: 'SET_EMAIL_VERIFICATION_REQUESTED',
+          requested: false,
+        });
+    }
+  });
 
   const preferencesBucket = client.bucket('preferences');
   preferencesBucket.channel.on('update', (entityId, updatedEntity) => {
