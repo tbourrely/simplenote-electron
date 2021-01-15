@@ -94,6 +94,15 @@ export type SelectNoteAbove = Action<'SELECT_NOTE_ABOVE'>;
 export type SelectNoteBelow = Action<'SELECT_NOTE_BELOW'>;
 export type SelectTrash = Action<'SELECT_TRASH'>;
 export type SetAnalytics = Action<'SET_ANALYTICS', { allowAnalytics: boolean }>;
+export type SetEmailVerificationRequested = Action<
+  'SET_EMAIL_VERIFICATION_REQUESTED',
+  { requested: boolean }
+>;
+export type SetEmailVerified = Action<
+  'SET_EMAIL_VERIFIED',
+  { verified: boolean }
+>;
+export type SetEmailVerifyURL = Action<'SET_EMAIL_VERIFY_URL', { url: string }>;
 export type SetUnsyncedNoteIds = Action<
   'SET_UNSYNCED_NOTE_IDS',
   { noteIds: T.EntityId[] }
@@ -373,6 +382,9 @@ export type ActionType =
   | SetAnalytics
   | SetAutoHideMenuBar
   | SetChangeVersion
+  | SetEmailVerificationRequested
+  | SetEmailVerified
+  | SetEmailVerifyURL
   | SetFocusMode
   | SetLineLength
   | SetNoteDisplay

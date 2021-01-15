@@ -2,15 +2,15 @@ import React, { FunctionComponent } from 'react';
 import { useSelector } from 'react-redux';
 
 import EmailConfirm from './email-confirm';
-import EmailVefrificationRequested from './email-verification-requested';
+import EmailVerificationRequested from './email-verification-requested';
 
 import * as S from '../state';
 
 const EmailVerification: FunctionComponent = () => {
-  const verified: boolean | undefined = useSelector(
+  const verified: boolean | null = useSelector(
     (state: S.State) => state.account.emailVerified
   );
-  // Do no show the banner if verified is undefined or true
+  // Do not show the modal if verified is null or true
   if (verified !== false) {
     return null;
   }
@@ -18,7 +18,7 @@ const EmailVerification: FunctionComponent = () => {
     (state: S.State) => state.account.emailVerificationRequested
   );
   if (requested) {
-    return <EmailVefrificationRequested />;
+    return <EmailVerificationRequested />;
   }
   return <EmailConfirm />;
 };
