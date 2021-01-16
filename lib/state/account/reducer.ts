@@ -23,17 +23,7 @@ const emailVerified: A.Reducer<boolean | null> = (state = null, action) => {
   }
 };
 
-const sendEmailVerifyUrl: A.Reducer<string> = (state = '', action) => {
-  switch (action.type) {
-    case 'SET_EMAIL_VERIFY_URL':
-      return action.url;
-    default:
-      return state;
-  }
-};
-
 export default combineReducers({
   emailVerificationRequested,
   emailVerified,
-  sendEmailVerifyUrl,
 });

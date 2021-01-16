@@ -307,6 +307,30 @@ export const noteRevisions: A.Reducer<Map<T.EntityId, Map<number, T.Note>>> = (
   }
 };
 
+export const account: A.Reducer<Map<T.EntityId, T.Account>> = (
+  state = new Map(),
+  action
+) => {
+  switch (action.type) {
+    case 'SET_ACCOUNT':
+      return new Map(state).set('email-verification', {
+        ...(state.get('email-verification') ?? {}),
+        status: action.status,
+      });
+
+    case 'ACCOUNT_BUCKET_REMOVE': {
+      const next = new Map(state);
+      return next.delete(action.id) ? next : state;
+    }
+
+    case 'ACCOUNT_BUCKET_UPDATE':
+      return new Map(state).set(action.id, action.data);
+
+    default:
+      return state;
+  }
+};
+
 export const preferences: A.Reducer<Map<T.EntityId, T.Preferences>> = (
   state = new Map(),
   action

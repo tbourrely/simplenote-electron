@@ -153,7 +153,7 @@ export const initSimperium = (
 
   const accountBucket = client.bucket('account');
   accountBucket.channel.on('update', (entityId, updatedEntity) => {
-    if ('account-key' !== entityId) {
+    if ('email-verification' !== entityId) {
       return;
     }
 
@@ -233,6 +233,7 @@ export const initSimperium = (
     preferencesQueue.add(entityId, Date.now() + delay);
 
   if ('production' !== process.env.NODE_ENV) {
+    window.account = accountBucket;
     // window.preferencesBucket = preferencesBucket;
     window.noteBucket = noteBucket;
     window.tagBucket = tagBucket;

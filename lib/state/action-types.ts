@@ -89,6 +89,7 @@ export type RequestNotifications = Action<
 >;
 export type RestoreOpenNote = Action<'RESTORE_OPEN_NOTE'>;
 export type Search = Action<'SEARCH', { searchQuery: string }>;
+export type SetAccount = Action<'SET_ACCOUNT', { status: T.Account }>;
 export type SelectNote = Action<'SELECT_NOTE', { noteId: T.EntityId }>;
 export type SelectNoteAbove = Action<'SELECT_NOTE_ABOVE'>;
 export type SelectNoteBelow = Action<'SELECT_NOTE_BELOW'>;
@@ -264,6 +265,14 @@ export type NoteBucketUpdate = Action<
   'NOTE_BUCKET_UPDATE',
   { noteId: T.EntityId; note: T.Note; isIndexing: boolean }
 >;
+export type AccountBucketRemove = Action<
+  'ACCOUNT_BUCKET_REMOVE',
+  { id: T.EntityId }
+>;
+export type AccountBucketUpdate = Action<
+  'ACCOUNT_BUCKET_UPDATE',
+  { id: T.EntityId; data: T.Preferences }
+>;
 export type PreferencesBucketRemove = Action<
   'PREFERENCES_BUCKET_REMOVE',
   { id: T.EntityId }
@@ -320,6 +329,8 @@ export type TagRefresh = Action<
 >;
 
 export type ActionType =
+  | AccountBucketRemove
+  | AccountBucketUpdate
   | AcknowledgePendingChange
   | AddCollaborator
   | AddNoteTag

@@ -35,9 +35,9 @@ const EmailVerification: FunctionComponent = () => {
   const email: string | null = useSelector(
     (state: S.State) => state.settings.accountName
   );
-  const sendVerifyUrl: string = useSelector(
-    (state: S.State) => state.account.sendEmailVerifyUrl
-  );
+
+  const base64EncodedEmail = btoa(email || '');
+  const sendVerifyUrl: string = `https://pr-357-dot-simple-note-hrd.appspot.com/account/verify-email/${base64EncodedEmail}`;
   // @todo we have a getTheme selector but I wasn't sure how to use that here
   const theme: string = useSelector((state: S.State) =>
     state.settings.theme === 'system'
@@ -122,7 +122,7 @@ const EmailVerification: FunctionComponent = () => {
         'theme-' + theme
       )}
     >
-      {requested ? displayEmailConfirm : displayEmailRequested}
+      {requested ? displayEmailRequested : displayEmailConfirm}
     </Modal>
   );
 };
